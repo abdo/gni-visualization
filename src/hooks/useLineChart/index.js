@@ -54,6 +54,8 @@ const useLineChart = ({
 
       const line = addLine({ svg, data, brush, x, y });
 
+      handleFocus({ svg, line, width, height, data, x, y });
+
       // A function that set idleTimeOut to null
       let idleTimeout;
       const idled = () => {
@@ -93,8 +95,6 @@ const useLineChart = ({
       svg.on('dblclick', () => {
         reinitializeChart({ data, xAxis, line, x, y });
       });
-
-      handleFocus({ svg, width, height, data, x, y });
     });
   }, [chosenRowId, passedWidth]);
 };

@@ -1,15 +1,27 @@
+import { useEffect, useRef, useState } from 'react';
+
 import { Container } from './style';
 import GNIdata from 'data/GNIdata.csv';
 import useLineChart from 'hooks/useLineChart';
-import { useRef } from 'react';
 
 const App = () => {
+  const [chartWidth, setChartWidth] = useState(window.innerWidth / 2);
+
+  useEffect(() => {
+    window.onresize = () => {
+      setChartWidth(
+        window.innerWidth < 800
+          ? window.innerWidth * 0.9
+          : window.innerWidth / 2
+      );
+    };
+  }, []);
   const chartContainerRef = useRef();
 
   useLineChart({
     containerRef: chartContainerRef,
     data: GNIdata,
-    width: window.innerWidth / 2,
+    width: chartWidth,
     uniqueColumn: 'Country Name',
     chosenRowId: 'World',
   });
