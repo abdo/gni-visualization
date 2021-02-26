@@ -5,10 +5,22 @@ import { useRef } from 'react';
 const App = () => {
   const containerRef = useRef();
 
-  useLineChart({ containerRef, data: GNIdata, width: window.innerWidth / 2 });
+  useLineChart({
+    containerRef,
+    data: GNIdata,
+    width: window.innerWidth / 2,
+    uniqueColumn: 'Country Name',
+    chosenRowId: 'World',
+  });
 
   return (
-    <div style={{ width: '100%', textAlign: 'center', marginTop: '50px' }}>
+    <div
+      style={{
+        width: '100%',
+        textAlign: 'center',
+        marginTop: '50px',
+      }}
+    >
       <div ref={containerRef} />
     </div>
   );

@@ -4,7 +4,13 @@ import clippathAndBrush from './clippathAndBrush';
 import reinitializeChart from './reinitializeChart';
 import { useEffect } from 'react';
 
-const useLineChart = ({ containerRef, data, width: passedWidth = 460 }) => {
+const useLineChart = ({
+  containerRef,
+  data,
+  width: passedWidth = 460,
+  uniqueColumn,
+  chosenRowId,
+}) => {
   useEffect(() => {
     const margin = { top: 10, right: 30, bottom: 30, left: 60 },
       width = passedWidth - margin.left - margin.right,
@@ -24,7 +30,9 @@ const useLineChart = ({ containerRef, data, width: passedWidth = 460 }) => {
 
     //Read the data
     d3.csv(data).then((allData) => {
-      const chosenRow = allData.find((row) => row['Country Name'] === 'World');
+      const chosenRow = allData.find(
+        (row) => row[uniqueColumn] === chosenRowId
+      );
       const data = Object.entries(chosenRow)
         .filter(
           (columnData) =>
@@ -85,7 +93,7 @@ const useLineChart = ({ containerRef, data, width: passedWidth = 460 }) => {
         reinitializeChart({ data, xAxis, line, x, y });
       });
     });
-  }, []);
+  }, [chosenRowId, passedWidth]);
 };
 
 export default useLineChart;
