@@ -18,13 +18,16 @@ const App = () => {
   }, []);
   const chartContainerRef = useRef();
 
-  useLineChart({
+  const { availableDates, rowIds } = useLineChart({
     containerRef: chartContainerRef,
     data: GNIdata,
     width: chartWidth,
     uniqueColumn: 'Country Name',
     chosenRowId: 'World',
   });
+
+  console.log('availableDates :>> ', availableDates);
+  console.log('rowIds :>> ', rowIds);
 
   return (
     <Container>

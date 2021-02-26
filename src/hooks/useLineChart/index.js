@@ -1,9 +1,10 @@
+import { useEffect, useState } from 'react';
+
 import addAxes from './addAxes';
 import addLine from './addLine';
 import clippathAndBrush from './clippathAndBrush';
 import handleFocus from './handleFocus';
 import reinitializeChart from './reinitializeChart';
-import { useEffect } from 'react';
 
 const useLineChart = ({
   containerRef,
@@ -12,6 +13,9 @@ const useLineChart = ({
   uniqueColumn,
   chosenRowId,
 }) => {
+  const [availableDates, setAvailableDates] = useState([]);
+  const [rowIds, setRowIds] = useState([]);
+
   useEffect(() => {
     const margin = { top: 10, right: 30, bottom: 30, left: 60 },
       width = passedWidth - margin.left - margin.right,
@@ -29,8 +33,16 @@ const useLineChart = ({
       .append('g')
       .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
+    setAvailableDates([]);
+    setRowIds([]);
+
     //Read the data
     d3.csv(data).then((allData) => {
+      const availableRowIds = allData
+        .filter((row) => row[uniqueColumn])
+        .map((row) => row[uniqueColumn]);
+      setRowIds(availableRowIds);
+
       const chosenRow = allData.find(
         (row) => row[uniqueColumn] === chosenRowId
       );
@@ -41,6 +53,7 @@ const useLineChart = ({
             !Number.isNaN(Number(columnData[0]))
         )
         .map((columnData) => {
+          setAvailableDates((dates) => [...dates, columnData[0]]);
           const year = d3.timeParse('%Y')(columnData[0]);
           return {
             date: year,
@@ -97,6 +110,8 @@ const useLineChart = ({
       });
     });
   }, [chosenRowId, passedWidth]);
+
+  return { availableDates, rowIds };
 };
 
 export default useLineChart;
