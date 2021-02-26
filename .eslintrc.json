@@ -1,0 +1,29 @@
+{
+  "env": {
+    "browser": true,
+    "es6": true
+  },
+  "extends": ["react-app", "prettier"],
+  "parserOptions": {
+    "ecmaVersion": 2020
+  },
+  "plugins": ["react", "prettier"],
+  "rules": {
+    "prettier/prettier": [
+      "error",
+      {
+        "trailingComma": "es5",
+        "jsxSingleQuote": true,
+        "semi": true,
+        "singleQuote": true,
+        "bracketSpacing": true,
+        "arrowParens": "always"
+      }
+    ],
+    "react-hooks/exhaustive-deps": "off",
+    "no-unused-vars": [1, { "vars": "all", "args": "after-used", "varsIgnorePattern": "_" }]
+  },
+  "globals": {
+    "d3": true
+  }
+}
