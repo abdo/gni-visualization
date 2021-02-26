@@ -1,5 +1,7 @@
+import MainChart from 'components/MainChart';
+
 const App = () => {
-  return <div>GNI Visualization</div>;
+  return <MainChart />;
 };
 
 export default App;
