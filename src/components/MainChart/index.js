@@ -1,12 +1,13 @@
+import { Container } from './style';
 import GNIdata from 'data/GNIdata.csv';
 import useLineChart from 'hooks/useLineChart';
 import { useRef } from 'react';
 
 const App = () => {
-  const containerRef = useRef();
+  const chartContainerRef = useRef();
 
   useLineChart({
-    containerRef,
+    containerRef: chartContainerRef,
     data: GNIdata,
     width: window.innerWidth / 2,
     uniqueColumn: 'Country Name',
@@ -14,15 +15,9 @@ const App = () => {
   });
 
   return (
-    <div
-      style={{
-        width: '100%',
-        textAlign: 'center',
-        marginTop: '50px',
-      }}
-    >
-      <div ref={containerRef} />
-    </div>
+    <Container>
+      <div ref={chartContainerRef} />
+    </Container>
   );
 };
 

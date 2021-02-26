@@ -1,6 +1,7 @@
 import addAxes from './addAxes';
 import addLine from './addLine';
 import clippathAndBrush from './clippathAndBrush';
+import handleFocus from './handleFocus';
 import reinitializeChart from './reinitializeChart';
 import { useEffect } from 'react';
 
@@ -92,6 +93,8 @@ const useLineChart = ({
       svg.on('dblclick', () => {
         reinitializeChart({ data, xAxis, line, x, y });
       });
+
+      handleFocus({ svg, width, height, data, x, y });
     });
   }, [chosenRowId, passedWidth]);
 };
