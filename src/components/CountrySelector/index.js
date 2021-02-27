@@ -7,7 +7,7 @@ const { Option } = Select;
 const CountrySelector = ({ chosenArea, setChosenArea, countries }) => {
   return (
     <Container>
-      <h3>Choose country:</h3>
+      <h3>Choose area:</h3>
       <Select
         showSearch
         placeholder='Select a country'

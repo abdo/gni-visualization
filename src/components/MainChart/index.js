@@ -1,9 +1,9 @@
 import * as chartConfigActions from 'store/chartConfig/actions';
 
+import { Container, Heading } from './style';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useRef, useState } from 'react';
 
-import { Container } from './style';
 import CountrySelector from 'components/CountrySelector';
 import GNIdata from 'data/GNIdata.csv';
 import YearsRangeSelector from 'components/YearsRangeSelector';
@@ -51,7 +51,7 @@ const App = () => {
 
   return (
     <Container width={chartWidth}>
-      <h1>GNI per capita, Atlas method (current US$)</h1>
+      <Heading>GNI per capita, Atlas method (current US$)</Heading>
       <div ref={chartContainerRef} />
 
       <CountrySelector

@@ -34,3 +34,7 @@ export const Container = styled.div`
 export const Select = styled(antSelect)`
   width: 200px;
 `;
+
+export const Heading = styled.h1`
+  margin: 0 0 50px;
+`;
