@@ -8,7 +8,7 @@ const addAxes = ({ svg, data, width, height }) => {
       })
     )
     .range([0, width]);
-  const xAxis = svg
+  svg
     .append('g')
     .attr('class', 'x-axis')
     .attr('transform', 'translate(0,' + height + ')')
@@ -26,7 +26,7 @@ const addAxes = ({ svg, data, width, height }) => {
     .range([height, 0]);
   const yAxis = svg.append('g').call(d3.axisLeft(y));
 
-  return { xAxis, yAxis, x, y };
+  return { yAxis, x, y };
 };
 
 export default addAxes;

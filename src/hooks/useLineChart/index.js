@@ -2,9 +2,8 @@ import { useEffect, useState } from 'react';
 
 import addAxes from './addAxes';
 import addLine from './addLine';
-import clippathAndBrush from './clippathAndBrush';
+import clippath from './clippath';
 import handleFocus from './handleFocus';
-import reinitializeChart from './reinitializeChart';
 
 const useLineChart = ({
   containerRef,
@@ -73,53 +72,13 @@ const useLineChart = ({
 
       setAvailableDates(dates.map((date) => date[0]));
 
-      const { xAxis, x, y } = addAxes({ svg, data, width, height });
+      const { x, y } = addAxes({ svg, data, width, height });
 
-      var { brush } = clippathAndBrush({ svg, width, height, updateChart });
+      clippath({ svg, width, height });
 
-      const line = addLine({ svg, data, brush, x, y });
+      const line = addLine({ svg, data, x, y });
 
       handleFocus({ svg, line, width, height, data, x, y });
-
-      // A function that set idleTimeOut to null
-      let idleTimeout;
-      const idled = () => {
-        idleTimeout = null;
-      };
-      // A function that update the chart for given boundaries
-      function updateChart(event) {
-        // What are the selected boundaries?
-        const extent = event.selection;
-        // If no selection, back to initial coordinate. Otherwise, update X axis domain
-        if (!extent) {
-          if (!idleTimeout) return (idleTimeout = setTimeout(idled, 350)); // This allows to wait a little bit
-          x.domain([4, 8]);
-        } else {
-          x.domain([x.invert(extent[0]), x.invert(extent[1])]);
-          line.select('.brush').call(brush.move, null); // This remove the grey brush area as soon as the selection has been done
-        }
-        // Update axis and line position
-        xAxis.transition().duration(1000).call(d3.axisBottom(x));
-        line
-          .select('.line')
-          .transition()
-          .duration(1000)
-          .attr(
-            'd',
-            d3
-              .line()
-              .x((d) => {
-                return x(d.date);
-              })
-              .y((d) => {
-                return y(d.value);
-              })
-          );
-      }
-      // If user double click, reinitialize the chart
-      svg.on('dblclick', () => {
-        reinitializeChart({ data, xAxis, line, x, y });
-      });
     });
   }, [chosenRowId, passedWidth, startYear, endYear]);
 
