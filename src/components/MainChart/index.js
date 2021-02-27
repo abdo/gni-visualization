@@ -6,18 +6,18 @@ import { useEffect, useRef, useState } from 'react';
 import { Container } from './style';
 import CountrySelector from 'components/CountrySelector';
 import GNIdata from 'data/GNIdata.csv';
+import YearsRangeSelector from 'components/YearsRangeSelector';
 import useLineChart from 'hooks/useLineChart';
 
 const App = () => {
   const [chartWidth, setChartWidth] = useState(window.innerWidth / 2);
 
-  const [startYear, setStartYear] = useState(null);
-  const [endYear, setEndYear] = useState(null);
-
   const chartConfig = useSelector((state) => state.chartConfig);
   const dispatch = useDispatch();
 
   const chosenArea = chartConfig.area;
+  const startYear = chartConfig.startYear;
+  const endYear = chartConfig.endYear;
 
   useEffect(() => {
     window.onresize = () => {
@@ -28,6 +28,7 @@ const App = () => {
       );
     };
   }, []);
+
   const chartContainerRef = useRef();
 
   const { availableDates, rowIds } = useLineChart({
@@ -44,14 +45,24 @@ const App = () => {
     dispatch(chartConfigActions.setChosenArea({ area }));
   };
 
+  const onChangeChosenYearRange = (range) => {
+    dispatch(chartConfigActions.setChosenYearRange({ range }));
+  };
+
   return (
-    <Container>
+    <Container width={chartWidth}>
+      <h1>GNI per capita, Atlas method (current US$)</h1>
       <div ref={chartContainerRef} />
 
       <CountrySelector
         chosenArea={chosenArea}
         setChosenArea={onChangeChosenArea}
         countries={rowIds}
+      />
+
+      <YearsRangeSelector
+        years={availableDates}
+        setChosenRange={onChangeChosenYearRange}
       />
     </Container>
   );

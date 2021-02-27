@@ -7,7 +7,7 @@ const handleFocus = ({ svg, width, height, data, x, y }) => {
     .attr('class', 'focusArea');
 
   var bisectDate = d3.bisector(function (d) {
-    return d.date;
+    return d?.date;
   }).left;
 
   // append the text at the intersection
@@ -39,18 +39,18 @@ const handleFocus = ({ svg, width, height, data, x, y }) => {
       i = bisectDate(data, x0, 1),
       d0 = data[i - 1],
       d1 = data[i],
-      d = x0 - d0.date > d1.date - x0 ? d1 : d0;
+      d = x0 - d0?.date > d1?.date - x0 ? d1 : d0;
 
     focus
       .select('rect')
-      .attr('transform', 'translate(' + x(d.date) + ',' + y(d.value) + ')')
-      .text(`${d.value} (${new Date(d.date).getFullYear()})`);
+      .attr('transform', 'translate(' + x(d?.date) + ',' + y(d?.value) + ')')
+      .text(`${d?.value} (${new Date(d?.date).getFullYear()})`);
 
     focus
       .select('text.desc')
-      .attr('transform', 'translate(' + x(d.date) + ',' + y(d.value) + ')')
+      .attr('transform', 'translate(' + x(d?.date) + ',' + y(d?.value) + ')')
       .text(
-        `${formatMoneyAmount(d.value)}$ in ${new Date(d.date).getFullYear()}`
+        `${formatMoneyAmount(d?.value)}$ in ${new Date(d?.date).getFullYear()}`
       )
       .attr('x', '8px')
       .attr('y', '25px');

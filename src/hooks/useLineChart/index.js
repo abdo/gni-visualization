@@ -42,28 +42,36 @@ const useLineChart = ({
     d3.csv(data).then((allData) => {
       const availableRowIds = allData
         .filter((row) => row[uniqueColumn])
+        // filter rows with few data
+        .filter(
+          (row) =>
+            Object.values(row).length -
+              Object.values(row).filter((value) => value).length <
+            10
+        )
         .map((row) => row[uniqueColumn]);
       setRowIds(availableRowIds);
 
       const chosenRow = allData.find(
         (row) => row[uniqueColumn] === chosenRowId
       );
-      const data = Object.entries(chosenRow)
-        .filter(
-          (columnData) =>
-            columnData.every((value) => value) &&
-            !Number.isNaN(Number(columnData[0])) &&
-            (!startYear || columnData[0] >= startYear) &&
-            (!endYear || columnData[0] <= endYear)
-        )
-        .map((columnData) => {
-          setAvailableDates((dates) => [...dates, columnData[0]]);
-          const year = d3.timeParse('%Y')(columnData[0]);
-          return {
-            date: year,
-            value: columnData[1],
-          };
-        });
+      const dates = Object.entries(chosenRow).filter(
+        (columnData) =>
+          columnData.every((value) => value) &&
+          !Number.isNaN(Number(columnData[0])) &&
+          (!startYear || columnData[0] >= startYear) &&
+          (!endYear || columnData[0] <= endYear)
+      );
+
+      const data = dates.map((columnData) => {
+        const year = d3.timeParse('%Y')(columnData[0]);
+        return {
+          date: year,
+          value: columnData[1],
+        };
+      });
+
+      setAvailableDates(dates.map((date) => date[0]));
 
       const { xAxis, x, y } = addAxes({ svg, data, width, height });
 

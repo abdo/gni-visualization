@@ -6,3 +6,10 @@ export const setChosenArea = ({ area }) => {
     payload: area,
   };
 };
+
+export const setChosenYearRange = ({ range }) => {
+  return {
+    type: actionTypes.SET_CHOSEN_YEAR_RANGE,
+    payload: range,
+  };
+};
