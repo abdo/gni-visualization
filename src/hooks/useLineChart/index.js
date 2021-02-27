@@ -12,6 +12,8 @@ const useLineChart = ({
   width: passedWidth = 460,
   uniqueColumn,
   chosenRowId,
+  startYear,
+  endYear,
 }) => {
   const [availableDates, setAvailableDates] = useState([]);
   const [rowIds, setRowIds] = useState([]);
@@ -50,7 +52,9 @@ const useLineChart = ({
         .filter(
           (columnData) =>
             columnData.every((value) => value) &&
-            !Number.isNaN(Number(columnData[0]))
+            !Number.isNaN(Number(columnData[0])) &&
+            (!startYear || columnData[0] >= startYear) &&
+            (!endYear || columnData[0] <= endYear)
         )
         .map((columnData) => {
           setAvailableDates((dates) => [...dates, columnData[0]]);
@@ -109,7 +113,7 @@ const useLineChart = ({
         reinitializeChart({ data, xAxis, line, x, y });
       });
     });
-  }, [chosenRowId, passedWidth]);
+  }, [chosenRowId, passedWidth, startYear, endYear]);
 
   return { availableDates, rowIds };
 };

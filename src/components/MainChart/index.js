@@ -7,6 +7,9 @@ import useLineChart from 'hooks/useLineChart';
 const App = () => {
   const [chartWidth, setChartWidth] = useState(window.innerWidth / 2);
 
+  const [startYear, setStartYear] = useState(null);
+  const [endYear, setEndYear] = useState(null);
+
   useEffect(() => {
     window.onresize = () => {
       setChartWidth(
@@ -24,10 +27,9 @@ const App = () => {
     width: chartWidth,
     uniqueColumn: 'Country Name',
     chosenRowId: 'World',
+    startYear,
+    endYear,
   });
-
-  console.log('availableDates :>> ', availableDates);
-  console.log('rowIds :>> ', rowIds);
 
   return (
     <Container>

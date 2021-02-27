@@ -1,3 +1,4 @@
+import { devices } from 'style/constants';
 import styled from 'styled-components';
 
 export const Container = styled.div`
@@ -15,6 +16,14 @@ export const Container = styled.div`
       & .desc {
         stroke: ${({ theme }) => theme.colors.white};
         font-weight: 300;
+      }
+    }
+
+    & .x-axis {
+      text {
+        @media ${devices.mobile} {
+          display: none;
+        }
       }
     }
   }

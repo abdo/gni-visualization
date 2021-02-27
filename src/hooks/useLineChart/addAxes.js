@@ -10,6 +10,7 @@ const addAxes = ({ svg, data, width, height }) => {
     .range([0, width]);
   const xAxis = svg
     .append('g')
+    .attr('class', 'x-axis')
     .attr('transform', 'translate(0,' + height + ')')
     .call(d3.axisBottom(x));
 
