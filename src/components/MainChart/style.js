@@ -1,3 +1,4 @@
+import { Select as antSelect } from 'antd';
 import { devices } from 'style/constants';
 import styled from 'styled-components';
 
@@ -27,4 +28,8 @@ export const Container = styled.div`
       }
     }
   }
+`;
+
+export const Select = styled(antSelect)`
+  width: 200px;
 `;
